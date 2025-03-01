@@ -4,6 +4,7 @@ import os
 import pathlib
 from typing import TYPE_CHECKING
 
+
 from jinja2.environment import (
     Environment,
     Template,
@@ -24,6 +25,8 @@ from pandas._typing import Scalar
 from tests import check
 
 from pandas.io.formats.style import Styler
+
+import pandas as pd
 
 DF = DataFrame({"a": [1, 2, 3], "b": [3.14, 2.72, 1.61]})
 
@@ -224,3 +227,21 @@ def test_subset() -> None:
     check(assert_type(DF.style.highlight_min(subset=IndexSlice[1:2]), Styler), Styler)
     check(assert_type(DF.style.highlight_min(subset=[1]), Styler), Styler)
     check(assert_type(DF.style.highlight_min(subset=DF.columns[1:]), Styler), Styler)
+
+
+def test_styler_columns_index():
+    styler = DF.style
+
+    # Test .columns
+    check(assert_type(hasattr(styler, "columns"), bool), bool)
+    assert hasattr(styler, "columns"), "Styler should have a 'columns' attribute"
+
+    check(assert_type(styler.columns, pd.Index), pd.Index)
+    assert list(styler.columns) == list(DF.columns), "Styler.columns should match DataFrame columns"
+
+    # Test .index
+    check(assert_type(hasattr(styler, "index"), bool), bool)
+    assert hasattr(styler, "index"), "Styler should have an 'index' attribute"
+
+    check(assert_type(styler.index, pd.Index), pd.Index)
+    assert list(styler.index) == list(DF.index), "Styler.index should match DataFrame index"
