@@ -13,6 +13,7 @@ from matplotlib.colors import Colormap
 import numpy as np
 from pandas.core.frame import DataFrame
 from pandas.core.series import Series
+from pandas.core.indexes.base import Index
 
 from pandas._typing import (
     Axis,
@@ -68,6 +69,12 @@ class Styler(StylerRenderer):
         escape: str | None = ...,
         formatter: ExtFormatter | None = ...,
     ) -> None: ...
+    @property
+    def index(self) -> Index:
+        ...
+    @property
+    def columns(self) -> Index:
+        ...
     def concat(self, other: Styler) -> Styler: ...
     def set_tooltips(
         self,
