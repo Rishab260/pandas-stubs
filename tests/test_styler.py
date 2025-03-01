@@ -4,7 +4,6 @@ import os
 import pathlib
 from typing import TYPE_CHECKING
 
-
 from jinja2.environment import (
     Environment,
     Template,
